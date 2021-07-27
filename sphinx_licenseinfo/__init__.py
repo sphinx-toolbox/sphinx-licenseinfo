@@ -9,6 +9,9 @@ Sphinx directives for showing license information.
 #
 #  Copyright © 2021 Dominic Davis-Foster <dominic@davis-foster.co.uk>
 #
+#  HTML styling and license-sprite.png from https://github.com/github/choosealicense.com
+#  Copyright (c) 2013-2021 GitHub, Inc. and contributors
+#
 #  Permission is hereby granted, free of charge, to any person obtaining a copy
 #  of this software and associated documentation files (the "Software"), to deal
 #  in the Software without restriction, including without limitation the rights
