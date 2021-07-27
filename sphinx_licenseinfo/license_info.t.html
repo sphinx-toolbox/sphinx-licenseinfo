@@ -1,0 +1,53 @@
+<div class="license-info">
+	<p>
+		{{ description|safe }}
+	</p>
+	<div class="license-details">
+		<table class="license-rules">
+			<tbody>
+			<tr>
+				<th class="label">Permissions</th>
+				<th class="label">Conditions</th>
+				<th class="label">Limitations</th>
+			</tr>
+			<tr>
+				<td>
+					<ul class="license-permissions">
+						{% for rule in license.permissions %}
+						<li class="{{ rule.tag }}" title="{{ rule.description }}">
+							<span class="license-sprite"></span>
+							{{ rule.label }}
+						</li>
+						{% endfor %}
+					</ul>
+				</td>
+				<td>
+					<ul class="license-conditions">
+						{% for rule in license.conditions %}
+						<li class="{{ rule.tag }}" title="{{ rule.description }}">
+							<span class="license-sprite"></span>
+							{{ rule.label }}
+						</li>
+						{% endfor %}
+					</ul>
+				</td>
+				<td>
+					<ul class="license-limitations" title="This license includes a limitation of liability.">
+						{% for rule in license.limitations %}
+						<li class="{{ rule.tag }}" title="{{ rule.description }}">
+							<span class="license-sprite"></span>
+							{{ rule.label }}
+						</li>
+						{% endfor %}
+					</ul>
+				</td>
+			</tr>
+			</tbody>
+		</table>
+		<div class="see-more-wrapper">
+			<a class="see-more" href="https://choosealicense.com/licenses/{{ license.spdx_id.lower() }}/">
+				See more information on choosealicense.com &#10153;
+			</a>
+		</div>
+	</div>
+</div>

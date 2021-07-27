@@ -1,0 +1,79 @@
+# Configuration for 'repo_helper' (https://github.com/domdfcoding/repo_helper)
+---
+modname: 'sphinx-licenseinfo'
+copyright_years: '2021'
+author: 'Dominic Davis-Foster'
+email: 'dominic@davis-foster.co.uk'
+username: 'sphinx-toolbox'
+assignee: 'domdfcoding'
+primary_conda_channel: "domdfcoding"
+version: '0.0.0'
+license: 'MIT'
+short_desc: 'Sphinx directives for showing license information.'
+
+use_whey: true
+enable_conda: false
+python_deploy_version: 3.7
+#min_coverage: 100
+#docs_fail_on_warning: true
+sphinx_html_theme: furo
+mypy_version: "0.910"
+
+# Versions to run tests for
+python_versions:
+ - '3.7'
+ - '3.8'
+ - '3.9'
+ - 3.10-dev
+ - pypy36
+ - pypy37
+
+sphinx_conf_epilogue:
+ - nitpicky = True
+# - needspace_amount = "4\\baselineskip"
+# - latex_elements["preamble"] = "\\usepackage{multicol}"
+ - ignore_missing_xrefs = ["^docutils", "^sphinx.writers.*.*Translator$"]
+ - autosummary_widths_builders = ["latex"]
+
+extra_sphinx_extensions:
+ - sphinx_toolbox_experimental.html_section
+ - sphinx_toolbox_experimental.autosummary_widths
+ - sphinx_toolbox_experimental.needspace
+ - sphinx_toolbox_experimental.missing_xref
+ - sphinx_licenseinfo
+
+classifiers:
+ - 'Development Status :: 4 - Beta'
+ - "Framework :: Sphinx :: Extension"
+ - 'Intended Audience :: Developers'
+ - "Topic :: Documentation"
+ - 'Topic :: Documentation :: Sphinx'
+ - 'Topic :: Software Development :: Documentation'
+ - "Topic :: Utilities"
+
+keywords:
+ - sphinx
+ - documentation
+ - sphinx-extension
+ - license
+
+exclude_files:
+ - contributing
+
+third_party_version_matrix:
+  sphinx:
+    - 3.2
+    - 3.3
+    - 3.4
+    - 3.5
+
+mypy_deps:
+ - types-docutils
+
+tox_testenv_extras: all
+
+manifest_additional:
+ - include sphinx_licenseinfo/license-sprite.png
+ - include sphinx_licenseinfo/license-sprite@2x.png
+ - include sphinx_licenseinfo/license_info.css
+ - include sphinx_licenseinfo/license_info.t.html
