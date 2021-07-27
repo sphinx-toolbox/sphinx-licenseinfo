@@ -189,6 +189,12 @@ class LicenseInfoDirective(SphinxDirective):
 		return [license_node]
 
 	def add_rules_list(self, category: str, rules: Iterable[Rule]):
+		"""
+		Add a heading for a rule category, followed by a bullet-point list of the rules in that category.
+
+		:param category: The category label.
+		:param rules: The rules.
+		"""
 
 		content = [
 				f"**{category}**",
