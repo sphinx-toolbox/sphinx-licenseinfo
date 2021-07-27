@@ -98,7 +98,7 @@ class LicenseDirective(SphinxDirective):
 		elif "py" in self.options:
 			distro = get_distribution(self.options["py"])
 
-			license_files = [f.name for f in distro.path.glob("LICEN[CS]E*")]
+			license_files = sorted(f.name for f in distro.path.glob("LICEN[CS]E*"))
 
 			if not license_files:
 				return self.problematic(
