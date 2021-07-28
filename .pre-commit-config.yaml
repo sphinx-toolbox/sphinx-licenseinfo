@@ -86,3 +86,11 @@ repos:
        - sphinx_licenseinfo
 
 # Custom hooks can be added below this comment
+
+ - repo: https://github.com/awebdeveloper/pre-commit-stylelint
+   rev: '8f63da497580898a7e0ceef6bf9e72cc0af07828'
+   hooks:
+    - id: stylelint
+      additional_dependencies: ['stylelint@13.13.1', 'stylelint-config-standard@22.0.0']
+      args:
+       - --fix
