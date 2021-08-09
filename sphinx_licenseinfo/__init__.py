@@ -48,7 +48,6 @@ from pychoosealicense.rules import Rule
 from sphinx import addnodes
 from sphinx.application import Sphinx
 from sphinx.builders.html import StandaloneHTMLBuilder
-from sphinx.config import Config
 from sphinx.util.docutils import ReferenceRole, SphinxDirective
 from sphinx.writers.html5 import HTML5Translator
 from sphinx_toolbox.utils import Purger
@@ -279,25 +278,36 @@ def copy_asset_files(app: Sphinx, exception: Optional[Exception] = None):
 			(css_dir / filename).write_bytes(fp2.read())
 
 
-# fix for https://github.com/sphinx-doc/sphinx/issues/9496
-StandaloneHTMLBuilder.default_translator_class = HTML5Translator  # type: ignore
-
-
-def _configure(app: Sphinx, config: Config):
+def _configure(app: Sphinx):
 	kwargs = {}
+	translation_handlers = app.registry.translation_handlers
+	translator = app.registry.translators.get(
+			app.builder.name,
+			app.builder.default_translator_class,
+			)
 
-	for builder_name, builder in app.registry.builders.items():
-		translator = app.registry.translators.get(builder.name, builder.default_translator_class)
-		if isinstance(translator, property):  # https://github.com/sphinx-doc/sphinx/issues/9496
-			continue
+	if translator:
 
-		if translator:
-			kwargs[builder_name] = (
-					translator.visit_transition,
-					getattr(translator, "depart_transition", lambda *args: None),
-					)
+		if app.builder.name in translation_handlers:
+			builder_name_or_format = app.builder.name
 
-	if kwargs:
+		else:
+			# Add the version for the format instead
+			builder = app.registry.builders[app.builder.format]
+			translator = app.registry.translators.get(builder.name, builder.default_translator_class)
+			builder_name_or_format = app.builder.format
+
+			if isinstance(translator, property):  # https://github.com/sphinx-doc/sphinx/issues/9496
+				if translator.fget is StandaloneHTMLBuilder.default_translator_class.fget:
+					translator = HTML5Translator
+				else:
+					return
+
+		kwargs[builder_name_or_format] = (
+				translator.visit_transition,
+				getattr(translator, "depart_transition", lambda *args: None),
+				)
+
 		app.add_node(nodes.custom_transition, **kwargs)  # type: ignore
 
 
@@ -322,7 +332,7 @@ def setup(app: Sphinx) -> Dict[str, Any]:
 	app.add_directive("license-info", LicenseInfoDirective)
 	app.add_role("choosealicense", ChooseALicenseRole())
 
-	app.connect("config-inited", _configure)
+	app.connect("builder-inited", _configure)
 	app.connect("env-purge-doc", license_node_purger.purge_nodes)
 	app.connect("env-get-outdated", license_node_purger.get_outdated_docnames)
 	app.connect("build-finished", copy_asset_files)
