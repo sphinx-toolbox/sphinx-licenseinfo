@@ -2,7 +2,7 @@
 License
 =========
 
-``sphinx-packaging`` is licensed under the :choosealicense:`MIT`
+``sphinx-licenseinfo`` is licensed under the :choosealicense:`MIT`
 
 .. license-info:: MIT
 
