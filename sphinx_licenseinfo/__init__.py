@@ -241,7 +241,7 @@ class ChooseALicenseRole(ReferenceRole):
 		self.inliner.document.note_explicit_target(target)  # type: ignore
 
 		refuri = f"https://choosealicense.com/licenses/{the_license.spdx_id.lower()}/"
-		reference = docutils.nodes.reference('', '', internal=False, refuri=refuri, classes=["pep"])
+		reference = docutils.nodes.reference('', '', internal=False, refuri=refuri, classes=["choosealicense"])
 		reference += docutils.nodes.inline(self.title, self.title)
 
 		return [index, target, reference], []
