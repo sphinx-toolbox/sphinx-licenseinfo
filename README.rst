@@ -56,8 +56,8 @@ sphinx-licenseinfo
 	:target: https://github.com/sphinx-toolbox/sphinx-licenseinfo/actions?query=workflow%3A%22mypy%22
 	:alt: mypy status
 
-.. |requires| image:: https://requires.io/github/sphinx-toolbox/sphinx-licenseinfo/requirements.svg?branch=master
-	:target: https://requires.io/github/sphinx-toolbox/sphinx-licenseinfo/requirements/?branch=master
+.. |requires| image:: https://dependency-dash.herokuapp.com/github/sphinx-toolbox/sphinx-licenseinfo/badge.svg
+	:target: https://dependency-dash.herokuapp.com/github/sphinx-toolbox/sphinx-licenseinfo/
 	:alt: Requirements Status
 
 .. |coveralls| image:: https://img.shields.io/coveralls/github/sphinx-toolbox/sphinx-licenseinfo/master?logo=coveralls
