@@ -99,7 +99,7 @@ sphinx-licenseinfo
 	:target: https://github.com/sphinx-toolbox/sphinx-licenseinfo/commit/master
 	:alt: GitHub last commit
 
-.. |maintained| image:: https://img.shields.io/maintenance/yes/2021
+.. |maintained| image:: https://img.shields.io/maintenance/yes/2022
 	:alt: Maintenance
 
 .. |pypi-downloads| image:: https://img.shields.io/pypi/dm/sphinx-licenseinfo
