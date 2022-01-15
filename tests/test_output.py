@@ -235,7 +235,7 @@ class LaTeXRegressionFixture(AdvancedFileRegressionFixture):
 							)
 					)
 
-			return check_text_files(obtained_filename, expected_filename)
+			return check_text_files(obtained_filename, expected_filename, encoding="UTF-8")
 
 		new_contents = _latex_date_re.sub(
 				r"\\date{Mar 11, 2021}",
