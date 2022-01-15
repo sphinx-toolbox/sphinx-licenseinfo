@@ -33,7 +33,7 @@ Sphinx directives for showing license information.
 
 # stdlib
 import textwrap
-from typing import Any, Dict, Iterable, List, Optional, Tuple
+from typing import Any, Dict, Iterable, List, Optional, Tuple, cast
 
 # 3rd party
 import docutils.nodes
@@ -47,6 +47,7 @@ from pychoosealicense import get_license
 from pychoosealicense.rules import Rule
 from sphinx import addnodes
 from sphinx.application import Sphinx
+from sphinx.builders import Builder
 from sphinx.builders.html import StandaloneHTMLBuilder
 from sphinx.util.docutils import ReferenceRole, SphinxDirective
 from sphinx.writers.html5 import HTML5Translator
@@ -89,7 +90,7 @@ class LicenseDirective(SphinxDirective):
 		Process the content of the directive.
 		"""
 
-		output = []
+		output: List[docutils.nodes.Node] = []
 
 		if len(self.options) != 1:
 			return self.problematic(f"'.. license::' requires exactly one option, got {len(self.options)}")
@@ -133,7 +134,7 @@ class LicenseDirective(SphinxDirective):
 		output.append(license_node)
 		return output
 
-	def problematic(self, message: str) -> List[docutils.nodes.problematic]:
+	def problematic(self, message: str) -> List[docutils.nodes.Node]:  # docutils.nodes.Node
 		"""
 		Reports an error while processing the directive.
 
@@ -213,9 +214,9 @@ class ChooseALicenseRole(ReferenceRole):
 	Sphinx role for referencing a license on `choosealicense.com`_.
 	"""  # noqa: RST306
 
-	title: Optional[str]
-	target: Optional[str]
-	has_explicit_title: Optional[bool]
+	title: Optional[str]  # type: ignore[assignment]
+	target: Optional[str]  # type: ignore[assignment]
+	has_explicit_title: Optional[bool]  # type: ignore[assignment]
 
 	def run(self) -> Tuple[List[docutils.nodes.Node], List[docutils.nodes.system_message]]:
 		"""
@@ -238,7 +239,7 @@ class ChooseALicenseRole(ReferenceRole):
 
 		index = addnodes.index(entries=entries)
 		target = docutils.nodes.target('', '', ids=[target_id])
-		self.inliner.document.note_explicit_target(target)  # type: ignore
+		self.inliner.document.note_explicit_target(target)
 
 		refuri = f"https://choosealicense.com/licenses/{the_license.spdx_id.lower()}/"
 		reference = docutils.nodes.reference('', '', internal=False, refuri=refuri, classes=["choosealicense"])
@@ -258,7 +259,7 @@ def copy_asset_files(app: Sphinx, exception: Optional[Exception] = None):
 	if exception:  # pragma: no cover
 		return
 
-	if app.builder.format.lower() != "html":
+	if cast(Builder, app.builder).format.lower() != "html":
 		return
 
 	static_dir = PathPlus(app.outdir) / "_static"
@@ -279,6 +280,9 @@ def copy_asset_files(app: Sphinx, exception: Optional[Exception] = None):
 
 
 def _configure(app: Sphinx):
+
+	assert app.builder is not None
+
 	kwargs = {}
 	translation_handlers = app.registry.translation_handlers
 	translator = app.registry.translators.get(
@@ -304,7 +308,7 @@ def _configure(app: Sphinx):
 					return
 
 		kwargs[builder_name_or_format] = (
-				translator.visit_transition,
+				translator.visit_transition,  # type: ignore[attr-defined ]
 				getattr(translator, "depart_transition", lambda *args: None),
 				)
 

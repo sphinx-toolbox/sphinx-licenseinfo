@@ -3,5 +3,5 @@ docutils==0.16
 domdf-python-tools>=3.0.0
 jinja2>=2.11.3
 pychoosealicense>=0.2.0
-sphinx<4.0.0,>=3.2.0
+sphinx<4.4.0,>=3.2.0
 sphinx-toolbox>=2.13.0
