@@ -7,5 +7,6 @@ pytest_plugins = (
 
 
 def pytest_sessionfinish(session, exitstatus):
+	# 3rd party
 	from sphinx_toolbox.utils import GITHUB_COM
 	GITHUB_COM.session.close()
