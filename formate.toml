@@ -34,6 +34,7 @@ default_section = "THIRDPARTY"
 known_third_party = [
     "apeye",
     "coincidence",
+    "consolekit",
     "coverage",
     "coverage_pyver_pragma",
     "dist_meta",
