@@ -1,12 +1,13 @@
 
 .license-info {
 	border-top: solid 1px #ddd;
+	padding-top: 10px;
 }
 
-.license-info ol, .license-info ul {
+.license-rules ol, .license-rules ul {
 	padding: 0;
 	margin: 0;
-	list-style-type: none;
+	list-style: none !important;
 }
 
 .license-details {
@@ -50,16 +51,24 @@
 .license-rules li {
 	margin-right: 15px;
 	margin-bottom: 5px;
+	margin-left: 0 !important;
+	list-style: none !important;
 }
 
 .license-rules li:hover {
 	color: #444;
 }
 
+.license-rules li:hover .rule-name {
+	filter: brightness(150%);
+}
+
 .license-sprite {
 	background-image: url(license-sprite.png);
 	background-repeat: no-repeat;
 	display: inline-block;
+	margin-top: 0 !important;
+	margin-bottom: 0 !important;
 }
 
 .license-limitations span {

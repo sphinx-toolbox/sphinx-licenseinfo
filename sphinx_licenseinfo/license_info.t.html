@@ -16,7 +16,7 @@
 						{% for rule in license.permissions %}
 						<li class="{{ rule.tag }}" title="{{ rule.description }}">
 							<span class="license-sprite"></span>
-							{{ rule.label }}
+							<span class="rule-name">{{ rule.label }}</span>
 						</li>
 						{% endfor %}
 					</ul>
@@ -26,7 +26,7 @@
 						{% for rule in license.conditions %}
 						<li class="{{ rule.tag }}" title="{{ rule.description }}">
 							<span class="license-sprite"></span>
-							{{ rule.label }}
+							<span class="rule-name">{{ rule.label }}</span>
 						</li>
 						{% endfor %}
 					</ul>
@@ -36,7 +36,7 @@
 						{% for rule in license.limitations %}
 						<li class="{{ rule.tag }}" title="{{ rule.description }}">
 							<span class="license-sprite"></span>
-							{{ rule.label }}
+							<span class="rule-name">{{ rule.label }}</span>
 						</li>
 						{% endfor %}
 					</ul>
