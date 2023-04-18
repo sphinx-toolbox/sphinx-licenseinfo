@@ -3,13 +3,12 @@ import shutil
 from typing import Iterator, cast
 
 # 3rd party
-import bs4.element  # type: ignore
+import bs4.element  # type: ignore[import]
 import handy_archives
 import pychoosealicense as pychoosealicense
 import pytest
 from bs4 import BeautifulSoup
 from coincidence.params import param
-from coincidence.regressions import AdvancedFileRegressionFixture
 from consolekit.terminal_colours import strip_ansi
 from domdf_python_tools.paths import PathPlus
 from domdf_python_tools.stringlist import StringList
@@ -28,7 +27,7 @@ def iter_licenses() -> Iterator[pychoosealicense.License]:
 
 
 @pytest.fixture()
-def doc_root(tmp_pathplus: PathPlus):
+def doc_root(tmp_pathplus: PathPlus) -> None:
 	doc_root = tmp_pathplus.parent / "test-sphinx-licenseinfo"
 	doc_root.maybe_make()
 	(doc_root / "conf.py").write_lines([
@@ -52,10 +51,10 @@ def wheel_directory() -> PathPlus:
 
 @pytest.fixture()
 def fake_virtualenv(
-		wheel_directory,
+		wheel_directory: PathPlus,
 		tmp_pathplus: PathPlus,
 		monkeypatch,
-		):
+		) -> None:
 
 	site_packages = (tmp_pathplus / "python3.8" / "site-packages")
 
@@ -82,8 +81,8 @@ def test_build_example(app: Sphinx):
 def check_html_output(
 		page: BeautifulSoup,
 		html_regression: HTMLRegressionFixture,
-		extension=".html",
-		):
+		extension: str = ".html",
+		) -> None:
 
 	code: bs4.element.Tag
 	for code in page.find_all("code", attrs={"class": "sig-prename descclassname"}):
@@ -99,12 +98,11 @@ def check_html_output(
 	html_regression.check(page, extension=extension)
 
 
-@pytest.mark.usefixtures("doc_root")
+@pytest.mark.usefixtures("doc_root", "fake_virtualenv")
 @pytest.mark.sphinx("html", testroot="test-sphinx-licenseinfo")
 def test_html_output(
 		app: Sphinx,
 		html_regression: HTMLRegressionFixture,
-		fake_virtualenv,
 		):
 
 	srcdir = PathPlus(app.srcdir)
@@ -123,13 +121,12 @@ def test_html_output(
 
 
 @pytest.mark.parametrize("lic", (param(l, id=l.spdx_id) for l in iter_licenses()))
-@pytest.mark.usefixtures("doc_root")
+@pytest.mark.usefixtures("doc_root", "fake_virtualenv")
 @pytest.mark.sphinx("html", testroot="test-sphinx-licenseinfo")
 def test_html_output_licenses(
 		app: Sphinx,
 		html_regression: HTMLRegressionFixture,
 		lic: pychoosealicense.License,
-		fake_virtualenv,
 		):
 
 	licenses_dir = PathPlus(app.srcdir) / "licenses"
@@ -154,18 +151,16 @@ def test_html_output_licenses(
 	check_html_output(page, html_regression)
 
 
-@pytest.mark.usefixtures("doc_root")
+@pytest.mark.usefixtures("doc_root", "fake_virtualenv")
 @pytest.mark.sphinx("html", testroot="test-sphinx-licenseinfo")
 def test_html_output_problematic(
 		app: Sphinx,
 		html_regression: HTMLRegressionFixture,
-		advanced_file_regression: AdvancedFileRegressionFixture,
-		fake_virtualenv,
 		):
 
 	shutil.copy2(PathPlus(__file__).parent / "problematic.rst", PathPlus(app.srcdir) / "problematic.rst")
 	app.build()
-	capout = strip_ansi(app._warning.getvalue())  # type: ignore
+	capout = strip_ansi(app._warning.getvalue())  # type: ignore[attr-defined]
 
 	for string in (
 			"problematic.rst:7: WARNING: '.. license::' requires exactly one option, got 0",
@@ -181,12 +176,11 @@ def test_html_output_problematic(
 	check_html_output(page, html_regression)
 
 
-@pytest.mark.usefixtures("doc_root")
+@pytest.mark.usefixtures("doc_root", "fake_virtualenv")
 @pytest.mark.sphinx("latex", testroot="test-sphinx-licenseinfo")
 def test_latex_output(
 		app: Sphinx,
 		latex_regression: LaTeXRegressionFixture,
-		fake_virtualenv,
 		):
 
 	srcdir = PathPlus(app.srcdir)

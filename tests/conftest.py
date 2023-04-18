@@ -6,7 +6,7 @@ pytest_plugins = (
 		)
 
 
-def pytest_sessionfinish(session, exitstatus):
+def pytest_sessionfinish(session, exitstatus) -> None:  # noqa: MAN001
 	# 3rd party
 	from sphinx_toolbox.utils import GITHUB_COM
 	GITHUB_COM.session.close()

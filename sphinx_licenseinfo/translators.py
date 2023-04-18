@@ -41,7 +41,7 @@ from sphinx_licenseinfo import nodes
 __all__ = ["visit_flushright_text", "depart_flushright_text", "visit_license_info", "depart_license_info"]
 
 
-def visit_flushright_text(translator: LaTeXTranslator, node: nodes.flushright_text):
+def visit_flushright_text(translator: LaTeXTranslator, node: nodes.flushright_text) -> None:
 	"""
 	Visit a :class:`~.flushright_text` node and generate LaTeX output.
 
@@ -72,7 +72,7 @@ def visit_flushright_text(translator: LaTeXTranslator, node: nodes.flushright_te
 	translator.body.append("$POP_TO_HERE$")
 
 
-def depart_flushright_text(translator: LaTeXTranslator, node: nodes.flushright_text):
+def depart_flushright_text(translator: LaTeXTranslator, node: nodes.flushright_text) -> None:
 	"""
 	Depart a :class:`~.flushright_text` node and generate LaTeX output.
 
@@ -93,7 +93,7 @@ def depart_flushright_text(translator: LaTeXTranslator, node: nodes.flushright_t
 	translator.body.append("\n\\end{flushright}\n")
 
 
-def visit_license_info(translator: HTML5Translator, node: nodes.license_info):
+def visit_license_info(translator: HTML5Translator, node: nodes.license_info) -> None:
 	"""
 	Visit a :class:`~.license_info` node and generate HTML output.
 
@@ -115,7 +115,7 @@ def visit_license_info(translator: HTML5Translator, node: nodes.license_info):
 	raise docutils.nodes.SkipNode
 
 
-def depart_license_info(translator: HTML5Translator, node: nodes.license_info):
+def depart_license_info(translator: HTML5Translator, node: nodes.license_info) -> None:
 	"""
 	Depart a :class:`~.license_info` node and generate HTML output.
 

@@ -188,7 +188,7 @@ class LicenseInfoDirective(SphinxDirective):
 
 		return [license_node]
 
-	def add_rules_list(self, category: str, rules: Iterable[Rule]):
+	def add_rules_list(self, category: str, rules: Iterable[Rule]) -> List[docutils.nodes.Node]:
 		"""
 		Add a heading for a rule category, followed by a bullet-point list of the rules in that category.
 
@@ -248,7 +248,7 @@ class ChooseALicenseRole(ReferenceRole):
 		return [index, target, reference], []
 
 
-def copy_asset_files(app: Sphinx, exception: Optional[Exception] = None):
+def copy_asset_files(app: Sphinx, exception: Optional[Exception] = None) -> None:
 	"""
 	Copy additional stylesheets into the HTML build directory.
 
@@ -279,7 +279,7 @@ def copy_asset_files(app: Sphinx, exception: Optional[Exception] = None):
 			(css_dir / filename).write_bytes(fp2.read())
 
 
-def _configure(app: Sphinx):
+def _configure(app: Sphinx) -> None:
 
 	assert app.builder is not None
 
@@ -312,7 +312,7 @@ def _configure(app: Sphinx):
 				getattr(translator, "depart_transition", lambda *args: None),
 				)
 
-		app.add_node(nodes.custom_transition, **kwargs)  # type: ignore
+		app.add_node(nodes.custom_transition, **kwargs)  # type: ignore[arg-type]
 
 
 def setup(app: Sphinx) -> Dict[str, Any]:
