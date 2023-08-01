@@ -1,5 +1,6 @@
+{% set heading = ("heading" if sphinx_version >= (5, 0) else 'headline') -%}
 <!DOCTYPE html>
-<html>
+<html{% if sphinx_version >= (5, 0) %} lang="en"{% endif %}>
  <head>
   <meta charset="utf-8"/>
   <meta content="width=device-width, initial-scale=1.0" name="viewport"/>{% if docutils_version > (0, 18) %}
@@ -13,9 +14,13 @@
   <script src="_static/jquery.js">
   </script>
   <script src="_static/underscore.js">
-  </script>
+  </script>{% if sphinx_version >= (5, 0) %}
+  <script src="_static/_sphinx_javascript_frameworks_compat.js">
+  </script>{% endif %}
   <script src="_static/doctools.js">
-  </script>
+  </script>{% if sphinx_version >= (5, 2) %}
+  <script src="_static/sphinx_highlight.js">
+  </script>{% endif %}
   <meta content="width=device-width, initial-scale=0.9, maximum-scale=0.9" name="viewport"/>
  </head>
  <body>
@@ -26,7 +31,7 @@
       <{{ section }} id="problematic">
        <h1>
         Problematic
-        <a class="headerlink" href="#problematic" title="Permalink to this headline">
+        <a class="headerlink" href="#problematic" title="Permalink to this {{ heading }}">
          ¶
         </a>
        </h1>
