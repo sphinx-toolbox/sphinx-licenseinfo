@@ -141,6 +141,9 @@ show_error_codes = true
 [tool.snippet-fmt]
 directives = [ "code-block",]
 
+[tool.dep_checker]
+allowed_unused = [ "sphinx_jinja2_compat",]
+
 [tool.dependency-dash."requirements.txt"]
 order = 10
 

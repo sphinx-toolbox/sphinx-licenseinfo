@@ -4,9 +4,11 @@ from typing import Iterator, cast
 
 # 3rd party
 import bs4.element  # type: ignore[import]
+import docutils
 import handy_archives
 import pychoosealicense as pychoosealicense
 import pytest
+import sphinx
 from bs4 import BeautifulSoup
 from coincidence.params import param
 from consolekit.terminal_colours import strip_ansi
@@ -114,10 +116,22 @@ def test_html_output(
 
 	app.build()
 
+	if docutils.__version_info__ >= (0, 17):
+		section = "section"
+		end_section = "section"
+	else:
+		section = 'div class="section"'
+		end_section = "div"
+
 	for lic in ["bsd-2-clause", "gpl-3.0", "lgpl-3.0", "mit"]:
 		output_file = PathPlus(app.outdir) / "examples" / f"{lic}.html"
 		page = BeautifulSoup(output_file.read_text(), "html5lib")
-		check_html_output(page, html_regression, extension=f"_{lic}.html")
+		html_regression.check(
+				page,
+				jinja2=True,
+				jinja2_namespace={"section": section, "end_section": end_section},
+				extension=f"_{lic}.html"
+				)
 
 
 @pytest.mark.parametrize("lic", (param(l, id=l.spdx_id) for l in iter_licenses()))
@@ -148,7 +162,15 @@ def test_html_output_licenses(
 
 	output_file = PathPlus(app.outdir) / "licenses" / f"{lic.spdx_id}.html"
 	page = BeautifulSoup(output_file.read_text(), "html5lib")
-	check_html_output(page, html_regression)
+
+	if docutils.__version_info__ >= (0, 17):
+		section = "section"
+		end_section = "section"
+	else:
+		section = 'div class="section"'
+		end_section = "div"
+
+	html_regression.check(page, jinja2=True, jinja2_namespace={"section": section, "end_section": end_section})
 
 
 @pytest.mark.usefixtures("doc_root", "fake_virtualenv")
@@ -162,18 +184,37 @@ def test_html_output_problematic(
 	app.build()
 	capout = strip_ansi(app._warning.getvalue())  # type: ignore[attr-defined]
 
-	for string in (
+	expeted_warnings = [
 			"problematic.rst:7: WARNING: '.. license::' requires exactly one option, got 0",
 			"problematic.rst:9: WARNING: Found more than one file matching the pattern 'LICEN[CS]E*' "
 			"for distribution 'packaging' version 21.0\nUsing the first one.",
 			"problematic.rst:12: WARNING: No 'LICENSE' file (or similar) found for distribution 'CacheControl' version 0.12.6",
-			'problematic.rst:15: WARNING: Error in "license" directive:\nno content permitted.\n\n.. license:: sphinx\n',
-			):
+			]
+
+	if sphinx.version_info >= (4, 4):
+		# if docutils.__version_info__ >= (0, 17):
+		expeted_warnings.append(
+				'problematic.rst:15: ERROR: Error in "license" directive:\nno content permitted.\n\n.. license:: sphinx\n',
+				)
+	else:
+		expeted_warnings.append(
+				'problematic.rst:15: WARNING: Error in "license" directive:\nno content permitted.\n\n.. license:: sphinx\n',
+				)
+
+	for string in expeted_warnings:
 		assert string in capout
 
 	output_file = PathPlus(app.outdir) / "problematic.html"
 	page = BeautifulSoup(output_file.read_text(), "html5lib")
-	check_html_output(page, html_regression)
+
+	if docutils.__version_info__ >= (0, 17):
+		section = "section"
+		end_section = "section"
+	else:
+		section = 'div class="section"'
+		end_section = "div"
+
+	html_regression.check(page, jinja2=True, jinja2_namespace={"section": section, "end_section": end_section})
 
 
 @pytest.mark.usefixtures("doc_root", "fake_virtualenv")

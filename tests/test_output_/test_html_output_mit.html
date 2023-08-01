@@ -2,7 +2,9 @@
 <html>
  <head>
   <meta charset="utf-8"/>
-  <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+  <meta content="width=device-width, initial-scale=1.0" name="viewport"/>{% if docutils_version > (0, 18) %}
+  <meta content="Docutils 0.18.1: http://docutils.sourceforge.net/" name="generator"/>{% elif docutils_version > (0, 17) %}
+  <meta content="Docutils 0.17.1: http://docutils.sourceforge.net/" name="generator"/>{% endif %}
   <title>
    MIT License — Python  documentation
   </title>
@@ -21,7 +23,7 @@
    <div class="documentwrapper">
     <div class="bodywrapper">
      <div class="body" role="main">
-      <div class="section" id="mit-license">
+      <{{ section }} id="mit-license">
        <h1>
         MIT License
         <a class="headerlink" href="#mit-license" title="Permalink to this headline">
@@ -161,7 +163,7 @@ OR OTHER DEALINGS IN THE SOFTWARE.
        </div>
        <p>
        </p>
-      </div>
+      </{{ end_section }}>
      </div>
     </div>
    </div>
