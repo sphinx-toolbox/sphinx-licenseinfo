@@ -4,7 +4,7 @@ build-backend = "whey"
 
 [project]
 name = "sphinx-licenseinfo"
-version = "0.3.1"
+version = "0.4.0"
 description = "Sphinx directives for showing license information."
 readme = "README.rst"
 keywords = [ "documentation", "license", "sphinx", "sphinx-extension",]
