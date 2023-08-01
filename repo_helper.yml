@@ -123,8 +123,6 @@ third_party_version_matrix:
 mypy_deps:
  - types-docutils
 
-tox_testenv_extras: all
-
 manifest_additional:
  - include sphinx_licenseinfo/license-sprite.png
  - include sphinx_licenseinfo/license-sprite@2x.png
