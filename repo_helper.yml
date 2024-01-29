@@ -129,3 +129,6 @@ manifest_additional:
  - include sphinx_licenseinfo/license-sprite@2x.png
  - include sphinx_licenseinfo/license_info.css
  - include sphinx_licenseinfo/license_info.t.html
+
+tox_unmanaged:
+  - testenv
