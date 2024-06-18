@@ -50,6 +50,7 @@ python_versions:
     - 5.2
     - 5.3
     - 6.0
+    - 6.1
  pypy37:
   matrix_exclude:
    sphinx:
