@@ -91,7 +91,7 @@ sphinx-licenseinfo
 .. |language| image:: https://img.shields.io/github/languages/top/sphinx-toolbox/sphinx-licenseinfo
 	:alt: GitHub top language
 
-.. |commits-since| image:: https://img.shields.io/github/commits-since/sphinx-toolbox/sphinx-licenseinfo/v0.4.0
+.. |commits-since| image:: https://img.shields.io/github/commits-since/sphinx-toolbox/sphinx-licenseinfo/v0.5.0
 	:target: https://github.com/sphinx-toolbox/sphinx-licenseinfo/pulse
 	:alt: GitHub commits since tagged version
 
