@@ -32,6 +32,7 @@ Sphinx directives for showing license information.
 #
 
 # stdlib
+import os
 import textwrap
 from typing import Any, Dict, Iterable, List, Optional, Tuple, cast
 
@@ -98,9 +99,11 @@ class LicenseDirective(SphinxDirective):
 		elif "py" in self.options:
 			distro: Distribution = get_distribution(self.options["py"])
 
-			license_files = sorted(f.name for f in distro.path.glob("LICEN[CS]E*"))
-			if distro.path.joinpath("licenses").is_dir():
-				license_files.extend(sorted(map(str, distro.path.joinpath("licenses").iterdir())))
+			license_files = list(f.name for f in distro.path.glob("LICEN[CS]E*"))
+			licenses_dir = distro.path / "licenses"
+			if licenses_dir.is_dir():
+				license_files.extend(f"licenses/{f}" for f in os.listdir(licenses_dir))
+			license_files = sorted(f for f in license_files if distro.path.joinpath(f).is_file())
 
 			if not license_files:
 				return self.problematic(
