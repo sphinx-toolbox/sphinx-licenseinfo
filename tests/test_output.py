@@ -3,7 +3,7 @@ import shutil
 from typing import Iterator, cast
 
 # 3rd party
-import bs4.element  # type: ignore[import]
+import bs4.element
 import docutils
 import handy_archives
 import pychoosealicense as pychoosealicense
@@ -87,12 +87,12 @@ def check_html_output(
 		) -> None:
 
 	code: bs4.element.Tag
-	for code in page.find_all("code", attrs={"class": "sig-prename descclassname"}):
+	for code in page.find_all("code", attrs={"class": "sig-prename descclassname"}):  # type: ignore[assignment]
 		first_child = code.contents[0]
 		if isinstance(first_child, bs4.element.Tag):
 			code.contents = [first_child.contents[0]]
 
-	for code in page.find_all("code", attrs={"class": "sig-name descname"}):
+	for code in page.find_all("code", attrs={"class": "sig-name descname"}):  # type: ignore[assignment]
 		first_child = code.contents[0]
 		if isinstance(first_child, bs4.element.Tag):
 			code.contents = [first_child.contents[0]]

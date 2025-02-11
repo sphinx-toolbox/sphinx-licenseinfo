@@ -100,7 +100,7 @@ class LicenseDirective(SphinxDirective):
 
 			license_files = sorted(f.name for f in distro.path.glob("LICEN[CS]E*"))
 			if distro.path.joinpath("licenses").is_dir():
-				license_files.extend(sorted(distro.path.joinpath("licenses").iterdir()))
+				license_files.extend(sorted(map(str, distro.path.joinpath("licenses").iterdir())))
 
 			if not license_files:
 				return self.problematic(
