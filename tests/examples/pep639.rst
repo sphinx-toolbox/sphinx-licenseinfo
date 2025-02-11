@@ -1,0 +1,10 @@
+===============
+PEP 639 Style
+===============
+
+``hatch`` is licensed under the :choosealicense:`MIT`
+
+.. license-info:: MIT
+
+.. license::
+	:py: hatch

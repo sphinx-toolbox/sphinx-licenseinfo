@@ -109,7 +109,7 @@ def test_html_output(
 
 	srcdir = PathPlus(app.srcdir)
 
-	for file in ["bsd-2-clause.rst", "gpl-3.0.rst", "lgpl-3.0.rst", "mit.rst"]:
+	for file in ["bsd-2-clause.rst", "gpl-3.0.rst", "lgpl-3.0.rst", "mit.rst", "pep639.rst"]:
 		shutil.copy2(PathPlus(__file__).parent / "examples" / file, srcdir / "examples" / file)
 
 	shutil.copy2(PathPlus(__file__).parent / "GIMP_COPYING", srcdir / "GIMP_COPYING")
@@ -228,7 +228,7 @@ def test_latex_output(
 
 	assert cast(Builder, app.builder).name.lower() == "latex"
 
-	for file in ["bsd-2-clause.rst", "gpl-3.0.rst", "lgpl-3.0.rst", "mit.rst"]:
+	for file in ["bsd-2-clause.rst", "gpl-3.0.rst", "lgpl-3.0.rst", "mit.rst", "pep639.rst"]:
 		shutil.copy2(
 				PathPlus(__file__).parent / "examples" / file,
 				srcdir / "examples" / file,

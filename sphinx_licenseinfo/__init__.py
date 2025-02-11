@@ -37,7 +37,7 @@ from typing import Any, Dict, Iterable, List, Optional, Tuple, cast
 
 # 3rd party
 import docutils.nodes
-from dist_meta.distributions import get_distribution
+from dist_meta.distributions import Distribution, get_distribution
 from docutils.parsers.rst import directives
 from docutils.statemachine import StringList
 from domdf_python_tools.compat import importlib_resources
@@ -96,9 +96,11 @@ class LicenseDirective(SphinxDirective):
 			return self.problematic(f"'.. license::' requires exactly one option, got {len(self.options)}")
 
 		elif "py" in self.options:
-			distro = get_distribution(self.options["py"])
+			distro: Distribution = get_distribution(self.options["py"])
 
 			license_files = sorted(f.name for f in distro.path.glob("LICEN[CS]E*"))
+			if distro.path.joinpath("licenses").is_dir():
+				license_files.extend(sorted(distro.path.joinpath("licenses").iterdir()))
 
 			if not license_files:
 				return self.problematic(
