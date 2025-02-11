@@ -187,7 +187,7 @@ def test_html_output_problematic(
 	expeted_warnings = [
 			"problematic.rst:7: WARNING: '.. license::' requires exactly one option, got 0",
 			"problematic.rst:9: WARNING: Found more than one file matching the pattern 'LICEN[CS]E*' "
-			"for distribution 'packaging' version 21.0\nUsing the first one.",
+			"for distribution 'packaging' version 21.0\n(['LICENSE', 'LICENSE.APACHE', 'LICENSE.BSD'])\nUsing the first one.",
 			"problematic.rst:12: WARNING: No 'LICENSE' file (or similar) found for distribution 'CacheControl' version 0.12.6",
 			]
 

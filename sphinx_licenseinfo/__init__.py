@@ -112,6 +112,7 @@ class LicenseDirective(SphinxDirective):
 				self.state.reporter.warning(
 						f"Found more than one file matching the pattern 'LICEN[CS]E*' "
 						f"for distribution {distro.name!r} version {distro.version}\n"
+						f"({license_files!r})\n"
 						f"Using the first one.",
 						line=self.lineno,
 						)
