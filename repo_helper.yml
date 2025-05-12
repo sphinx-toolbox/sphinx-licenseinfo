@@ -52,6 +52,9 @@ python_versions:
     - 6.0
     - 6.1
  pypy37:
+  platforms:
+   - Linux
+   - macOS
   matrix_exclude:
    sphinx:
     - 3.2
@@ -66,6 +69,9 @@ python_versions:
     - 6.2
     - latest
  pypy38:
+  platforms:
+   - Linux
+   - macOS
   matrix_exclude:
    sphinx:
     - 3.2
