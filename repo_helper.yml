@@ -32,7 +32,16 @@ python_versions:
  "3.10":
  "3.11":
  "3.12":
- 3.13-dev:
+  matrix_exclude:
+   sphinx:
+    - 3.2
+    - 3.3
+    - 3.4
+    - 3.5
+    - 4.0
+    - 4.1
+    - 4.2
+ "3.13":
   matrix_exclude:
    sphinx:
     - 3.2
