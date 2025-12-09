@@ -87,12 +87,12 @@ def check_html_output(
 		) -> None:
 
 	code: bs4.element.Tag
-	for code in page.find_all("code", attrs={"class": "sig-prename descclassname"}):  # type: ignore[assignment]
+	for code in page.find_all("code", attrs={"class": "sig-prename descclassname"}):
 		first_child = code.contents[0]
 		if isinstance(first_child, bs4.element.Tag):
 			code.contents = [first_child.contents[0]]
 
-	for code in page.find_all("code", attrs={"class": "sig-name descname"}):  # type: ignore[assignment]
+	for code in page.find_all("code", attrs={"class": "sig-name descname"}):
 		first_child = code.contents[0]
 		if isinstance(first_child, bs4.element.Tag):
 			code.contents = [first_child.contents[0]]
