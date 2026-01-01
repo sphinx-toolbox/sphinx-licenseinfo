@@ -47,7 +47,7 @@ class flushright_text(nodes.paragraph):
 	"""
 
 
-class license_info(nodes.paragraph):
+class license_info(nodes.paragraph):  # noqa: PRM003
 	r"""
 	Docutils node representing information about a license.
 

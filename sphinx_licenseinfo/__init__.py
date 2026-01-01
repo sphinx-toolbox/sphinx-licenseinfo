@@ -108,7 +108,7 @@ class LicenseDirective(SphinxDirective):
 			if not license_files:
 				return self.problematic(
 						f"No 'LICENSE' file (or similar) found "
-						f"for distribution {distro.name!r} version {distro.version}"
+						f"for distribution {distro.name!r} version {distro.version}",
 						)
 
 			if len(license_files) > 1:
@@ -182,13 +182,9 @@ class LicenseInfoDirective(SphinxDirective):
 
 		see_more_node = nodes.flushright_text('')
 		license_node += see_more_node
-		self.state.nested_parse(
-				StringList([
-						f":choosealicense:`See more information on choosealicense.com ➩ <{the_license.spdx_id.lower()}>`"
-						]),
-				self.content_offset,
-				see_more_node
-				)
+
+		source = f":choosealicense:`See more information on choosealicense.com ➩ <{the_license.spdx_id.lower()}>`"
+		self.state.nested_parse(StringList([source]), self.content_offset, see_more_node)
 
 		license_node += nodes.custom_transition()
 

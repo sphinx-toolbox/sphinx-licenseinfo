@@ -130,7 +130,7 @@ def test_html_output(
 				page,
 				jinja2=True,
 				jinja2_namespace={"section": section, "end_section": end_section},
-				extension=f"_{lic}.html"
+				extension=f"_{lic}.html",
 				)
 
 

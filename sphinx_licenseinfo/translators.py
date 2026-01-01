@@ -102,11 +102,12 @@ def visit_license_info(translator: HTML5Translator, node: nodes.license_info) ->
 	"""
 
 	template_source = importlib_resources.read_text("sphinx_licenseinfo", "license_info.t.html")
-	license_template = jinja2.Environment(  # nosec: B701
+	environment = jinja2.Environment(  # nosec: B701
 		loader=jinja2.BaseLoader(),
 		undefined=jinja2.StrictUndefined,
-		autoescape=jinja2.select_autoescape()
-		).from_string(template_source)
+		autoescape=jinja2.select_autoescape(),
+		)
+	license_template = environment.from_string(template_source)
 
 	the_description = pychoosealicense.description.as_html(node.license.description)
 	output = license_template.render(license=node.license, description=the_description).split('\n')
