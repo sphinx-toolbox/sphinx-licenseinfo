@@ -1,16 +1,19 @@
 # stdlib
-from typing import Iterator
+from typing import TYPE_CHECKING, Iterator
 
 # 3rd party
 import pychoosealicense
 import pytest as pytest
 from apeye.requests_url import RequestsURL
-from importlib_resources import files
-from importlib_resources.abc import Traversable
+from domdf_python_tools.compat.importlib_resources import files
+
+if TYPE_CHECKING:
+	# stdlib
+	from importlib.resources.abc import Traversable
 
 
 def iter_licenses() -> Iterator[pychoosealicense.License]:
-	traversable: Traversable = files("pychoosealicense._licenses")
+	traversable: "Traversable" = files("pychoosealicense._licenses")
 	for license_file in traversable.iterdir():
 		if license_file.name.endswith(".txt"):
 			yield pychoosealicense.get_license(license_file.name[:-4])

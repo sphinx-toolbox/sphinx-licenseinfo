@@ -1,6 +1,6 @@
 # stdlib
 import shutil
-from typing import Dict, Iterator, List, cast
+from typing import TYPE_CHECKING, Dict, Iterator, List, cast
 
 # 3rd party
 import bs4.element
@@ -12,17 +12,20 @@ import sphinx
 from bs4 import BeautifulSoup
 from coincidence.params import param
 from consolekit.terminal_colours import strip_ansi
+from domdf_python_tools.compat.importlib_resources import files
 from domdf_python_tools.paths import PathPlus
 from domdf_python_tools.stringlist import StringList
-from importlib_resources import files
-from importlib_resources.abc import Traversable
 from sphinx.application import Sphinx
 from sphinx.builders import Builder
 from sphinx_toolbox.testing import HTMLRegressionFixture, LaTeXRegressionFixture
 
+if TYPE_CHECKING:
+	# stdlib
+	from importlib.resources.abc import Traversable
+
 
 def iter_licenses() -> Iterator[pychoosealicense.License]:
-	traversable: Traversable = files("pychoosealicense._licenses")
+	traversable: "Traversable" = files("pychoosealicense._licenses")
 	for license_file in traversable.iterdir():
 		if license_file.name.endswith(".txt"):
 			yield pychoosealicense.get_license(license_file.name[:-4])
