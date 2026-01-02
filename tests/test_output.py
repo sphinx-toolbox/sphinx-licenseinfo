@@ -24,6 +24,26 @@ if TYPE_CHECKING:
 	from importlib.resources.abc import Traversable
 
 
+def prepare_page(html: str):
+	page = BeautifulSoup(html, "html5lib")
+
+	for meta in cast(List[Dict], page.find_all("meta")):
+		if meta.get("content", '') == "width=device-width, initial-scale=0.9, maximum-scale=0.9":
+			meta.extract()  # type: ignore[attr-defined]
+
+	for div in page.select("div.sphinxsidebar"):
+		div.extract()
+
+	for div in page.select("div.related"):
+		if div["aria-label"] == "Related":
+			div.extract()
+
+	for div in page.select("div.clearer"):
+		div.extract()
+
+	return page
+
+
 def iter_licenses() -> Iterator[pychoosealicense.License]:
 	traversable: "Traversable" = files("pychoosealicense._licenses")
 	for license_file in traversable.iterdir():
@@ -36,6 +56,8 @@ def doc_root(tmp_pathplus: PathPlus) -> None:
 	doc_root = tmp_pathplus.parent / "test-sphinx-licenseinfo"
 	doc_root.maybe_make()
 	(doc_root / "conf.py").write_lines([
+			"project = 'Python'",
+			"author = 'unknown'",
 			"extensions = ['sphinx_licenseinfo']",
 			"toml_spec_version = '0.5.0'",
 			])
@@ -128,11 +150,7 @@ def test_html_output(
 
 	for lic in ["bsd-2-clause", "gpl-3.0", "lgpl-3.0", "mit"]:
 		output_file = PathPlus(app.outdir) / "examples" / f"{lic}.html"
-		page = BeautifulSoup(output_file.read_text(), "html5lib")
-
-		for meta in cast(List[Dict], page.find_all("meta")):
-			if meta.get("content", '') == "width=device-width, initial-scale=0.9, maximum-scale=0.9":
-				meta.extract()  # type: ignore[attr-defined]
+		page = prepare_page(output_file.read_text())
 
 		html_regression.check(
 				page,
@@ -169,11 +187,7 @@ def test_html_output_licenses(
 	app.build()
 
 	output_file = PathPlus(app.outdir) / "licenses" / f"{lic.spdx_id}.html"
-	page = BeautifulSoup(output_file.read_text(), "html5lib")
-
-	for meta in cast(List[Dict], page.find_all("meta")):
-		if meta.get("content", '') == "width=device-width, initial-scale=0.9, maximum-scale=0.9":
-			meta.extract()  # type: ignore[attr-defined]
+	page = prepare_page(output_file.read_text())
 
 	if docutils.__version_info__ >= (0, 17):
 		section = "section"
@@ -196,32 +210,32 @@ def test_html_output_problematic(
 	app.build()
 	capout = strip_ansi(app._warning.getvalue())  # type: ignore[attr-defined]
 
-	expeted_warnings = [
+	expected_warnings = [
 			"problematic.rst:7: WARNING: '.. license::' requires exactly one option, got 0",
 			"problematic.rst:9: WARNING: Found more than one file matching the pattern 'LICEN[CS]E*' "
 			"for distribution 'packaging' version 21.0\n(['LICENSE', 'LICENSE.APACHE', 'LICENSE.BSD'])\nUsing the first one.",
 			"problematic.rst:12: WARNING: No 'LICENSE' file (or similar) found for distribution 'CacheControl' version 0.12.6",
 			]
 
-	if sphinx.version_info >= (4, 4):
+	if sphinx.version_info >= (8, 0):
+		expected_warnings.append(
+				'problematic.rst:15: ERROR: Error in "license" directive:\nno content permitted.\n\n.. license:: sphinx [docutils]\n',
+				)
+	elif sphinx.version_info >= (4, 4):
 		# if docutils.__version_info__ >= (0, 17):
-		expeted_warnings.append(
+		expected_warnings.append(
 				'problematic.rst:15: ERROR: Error in "license" directive:\nno content permitted.\n\n.. license:: sphinx\n',
 				)
 	else:
-		expeted_warnings.append(
+		expected_warnings.append(
 				'problematic.rst:15: WARNING: Error in "license" directive:\nno content permitted.\n\n.. license:: sphinx\n',
 				)
 
-	for string in expeted_warnings:
+	for string in expected_warnings:
 		assert string in capout
 
 	output_file = PathPlus(app.outdir) / "problematic.html"
-	page = BeautifulSoup(output_file.read_text(), "html5lib")
-
-	for meta in cast(List[Dict], page.find_all("meta")):
-		if meta.get("content", '') == "width=device-width, initial-scale=0.9, maximum-scale=0.9":
-			meta.extract()  # type: ignore[attr-defined]
+	page = prepare_page(output_file.read_text())
 
 	if docutils.__version_info__ >= (0, 17):
 		section = "section"
