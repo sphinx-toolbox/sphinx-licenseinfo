@@ -1,6 +1,7 @@
+{% set permalink = ("Link" if sphinx_version >= (7, 2) else 'Permalink') -%}
 {% set heading = ("heading" if sphinx_version >= (5, 0) else 'headline') -%}
 <!DOCTYPE html>
-<html{% if sphinx_version >= (5, 0) %} lang="en"{% endif %}>
+<html{% if sphinx_version >= (7, 2) %} data-content_root="../"{% endif %}{% if sphinx_version >= (5, 0) %} lang="en"{% endif %}>
  <head>
   <meta charset="utf-8"/>
   <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
@@ -24,7 +25,6 @@
   </script>{% if sphinx_version >= (5, 2) %}
   <script src="../_static/sphinx_highlight.js{% if sphinx_version >= (7, 2) %}?v=dc90522c{% elif sphinx_version >= (7, 1) %}?v=4825356b{% endif %}">
   </script>{% endif %}
-  <meta content="width=device-width, initial-scale=0.9, maximum-scale=0.9" name="viewport"/>
  </head>
  <body>
   <div class="document">
@@ -40,7 +40,7 @@
           LaTeX Project Public License v1.3c
          </span>
         </a>
-        <a class="headerlink" href="#latex-project-public-license-v1-3c" title="Permalink to this {{ heading }}">
+        <a class="headerlink" href="#latex-project-public-license-v1-3c" title="{{ permalink }} to this {{ heading }}">
          ¶
         </a>
        </h1>

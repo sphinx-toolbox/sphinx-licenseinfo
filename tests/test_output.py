@@ -1,6 +1,6 @@
 # stdlib
 import shutil
-from typing import Iterator, cast
+from typing import Dict, Iterator, List, cast
 
 # 3rd party
 import bs4.element
@@ -126,6 +126,11 @@ def test_html_output(
 	for lic in ["bsd-2-clause", "gpl-3.0", "lgpl-3.0", "mit"]:
 		output_file = PathPlus(app.outdir) / "examples" / f"{lic}.html"
 		page = BeautifulSoup(output_file.read_text(), "html5lib")
+
+		for meta in cast(List[Dict], page.find_all("meta")):
+			if meta.get("content", '') == "width=device-width, initial-scale=0.9, maximum-scale=0.9":
+				meta.extract()  # type: ignore[attr-defined]
+
 		html_regression.check(
 				page,
 				jinja2=True,
@@ -162,6 +167,10 @@ def test_html_output_licenses(
 
 	output_file = PathPlus(app.outdir) / "licenses" / f"{lic.spdx_id}.html"
 	page = BeautifulSoup(output_file.read_text(), "html5lib")
+
+	for meta in cast(List[Dict], page.find_all("meta")):
+		if meta.get("content", '') == "width=device-width, initial-scale=0.9, maximum-scale=0.9":
+			meta.extract()  # type: ignore[attr-defined]
 
 	if docutils.__version_info__ >= (0, 17):
 		section = "section"
@@ -206,6 +215,10 @@ def test_html_output_problematic(
 
 	output_file = PathPlus(app.outdir) / "problematic.html"
 	page = BeautifulSoup(output_file.read_text(), "html5lib")
+
+	for meta in cast(List[Dict], page.find_all("meta")):
+		if meta.get("content", '') == "width=device-width, initial-scale=0.9, maximum-scale=0.9":
+			meta.extract()  # type: ignore[attr-defined]
 
 	if docutils.__version_info__ >= (0, 17):
 		section = "section"

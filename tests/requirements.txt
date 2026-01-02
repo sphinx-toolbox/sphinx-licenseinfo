@@ -4,6 +4,7 @@ coverage>=5.1
 coverage-pyver-pragma>=0.2.1
 cryptography<44; implementation_name == "pypy" and python_version == "3.8"
 cryptography<40; implementation_name == "pypy" and python_version == "3.7"
+defusedxml>=0.7.1
 hatch>=1.7.0
 importlib-metadata>=3.6.0
 importlib-resources>=5.2.0

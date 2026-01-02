@@ -34,6 +34,7 @@ known_third_party = [
     "coverage",
     "coverage_pyver_pragma",
     "cryptography",
+    "defusedxml",
     "dist_meta",
     "docutils",
     "domdf_python_tools",
