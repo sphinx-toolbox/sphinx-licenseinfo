@@ -9,7 +9,7 @@ from domdf_python_tools.compat.importlib_resources import files
 
 if TYPE_CHECKING:
 	# stdlib
-	from importlib.resources.abc import Traversable
+	from importlib.abc import Traversable
 
 
 def iter_licenses() -> Iterator[pychoosealicense.License]:

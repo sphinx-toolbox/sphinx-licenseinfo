@@ -21,10 +21,10 @@ from sphinx_toolbox.testing import HTMLRegressionFixture, LaTeXRegressionFixture
 
 if TYPE_CHECKING:
 	# stdlib
-	from importlib.resources.abc import Traversable
+	from importlib.abc import Traversable
 
 
-def prepare_page(html: str):
+def prepare_page(html: str) -> BeautifulSoup:
 	page = BeautifulSoup(html, "html5lib")
 
 	for meta in cast(List[Dict], page.find_all("meta")):
