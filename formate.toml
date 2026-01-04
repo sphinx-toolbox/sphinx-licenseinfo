@@ -27,30 +27,6 @@ lines_between_types = 0
 use_parentheses = true
 remove_redundant_aliases = true
 default_section = "THIRDPARTY"
-known_third_party = [
-    "coincidence",
-    "consolekit",
-    "coverage",
-    "coverage_pyver_pragma",
-    "cryptography",
-    "defusedxml",
-    "dist_meta",
-    "docutils",
-    "domdf_python_tools",
-    "hatch",
-    "importlib_metadata",
-    "jinja2",
-    "pychoosealicense",
-    "pygments",
-    "pytest",
-    "pytest_cov",
-    "pytest_randomly",
-    "pytest_timeout",
-    "setuptools",
-    "sphinx",
-    "sphinx_jinja2_compat",
-    "sphinx_toolbox",
-]
 known_first_party = [ "sphinx_licenseinfo",]
 
 [config]
