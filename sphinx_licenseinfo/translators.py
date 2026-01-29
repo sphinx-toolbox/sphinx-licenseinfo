@@ -106,7 +106,7 @@ def visit_license_info(translator: HTML5Translator, node: nodes.license_info) ->
 		loader=jinja2.BaseLoader(),
 		undefined=jinja2.StrictUndefined,
 		autoescape=jinja2.select_autoescape(),
-		)
+	)
 	license_template = environment.from_string(template_source)
 
 	the_description = pychoosealicense.description.as_html(node.license.description)
