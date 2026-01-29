@@ -103,7 +103,7 @@ sphinx-licenseinfo
 	:alt: Maintenance
 
 .. |pypi-downloads| image:: https://img.shields.io/pypi/dm/sphinx-licenseinfo
-	:target: https://pypi.org/project/sphinx-licenseinfo/
+	:target: https://pypistats.org/packages/sphinx-licenseinfo
 	:alt: PyPI - Downloads
 
 .. end shields
