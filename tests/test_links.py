@@ -19,7 +19,7 @@ def iter_licenses() -> Iterator[pychoosealicense.License]:
 			yield pychoosealicense.get_license(license_file.name[:-4])
 
 
-@pytest.mark.parametrize("lic", (pytest.param(l, id=l.spdx_id) for l in iter_licenses()))
+@pytest.mark.parametrize("lic", [pytest.param(l, id=l.spdx_id) for l in iter_licenses()])
 def test_links(lic: pychoosealicense.License):
 	"""
 	Check that each license can be correctly linked to choosealicense.com

@@ -160,7 +160,7 @@ def test_html_output(
 				)
 
 
-@pytest.mark.parametrize("lic", (param(l, id=l.spdx_id) for l in iter_licenses()))
+@pytest.mark.parametrize("lic", [param(l, id=l.spdx_id) for l in iter_licenses()])
 @pytest.mark.usefixtures("doc_root", "fake_virtualenv")
 @pytest.mark.sphinx("html", testroot="test-sphinx-licenseinfo")
 def test_html_output_licenses(
